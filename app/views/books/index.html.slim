@@ -1,0 +1,12 @@
+h1 Каталог книг
+
+.row.g-3
+  - @books.each do |book|
+    .col-md-4
+      .card.h-100
+        .card-body
+          h2.card-title.h5 = book.title
+          p.card-text = "Автор: #{book.author.name}"
+          p.card-text = "ISBN: #{book.isbn}"
+          p.card-text = "Год издания: #{book.published_year}"
+          = link_to 'Подробнее', book_path(book), class: 'btn btn-primary'
