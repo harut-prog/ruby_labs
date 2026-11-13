@@ -1,4 +1,6 @@
 h1 borrowings
 
 - @borrowings.each do |item|
- p = link_to item.id, polymorphic_path(item)
+  p = link_to item.id, polymorphic_path(item)
+
+= link_to 'Новая выдача', new_borrowing_path

@@ -1,0 +1,25 @@
+- borrowing.errors.full_messages.each do |message|
+  p.text-danger = message
+
+= form_with model: borrowing do |f|
+  = f.label :book_id, 'Книга'
+  = f.select :book_id,
+             options_for_select(@books.map { |book| [book.title, book.id, { 'data-isbn' => book.isbn }] }, borrowing.book_id),
+             {},
+             id: 'book_choice'
+  input#book_isbn readonly=true
+
+  = f.label :member_id, 'Читатель'
+  - member = borrowing.member
+  - member_label = member ? "#{member.name} (#{member.email})" : ''
+  input#member_name list='member_names' autocomplete='off' value=member_label
+  datalist#member_names
+    - @members.each do |member|
+      option value="#{member.name} (#{member.email})" data-id=member.id
+  = f.hidden_field :member_id, id: 'member_id'
+
+  = f.date_field :borrowed_on
+  = f.date_field :due_on
+  = f.date_field :returned_on
+
+  = f.submit 'Сохранить'
