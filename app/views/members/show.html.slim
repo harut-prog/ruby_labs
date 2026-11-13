@@ -1,10 +1,17 @@
-h1 Member
+h1.mb-4 = @member.name
 
-pre = @member.attributes.inspect
+dl.row
+  dt.col-sm-2 Email
+  dd.col-sm-10.text-break = @member.email
+  dt.col-sm-2 Телефон
+  dd.col-sm-10 = @member.phone.presence || 'Не указан'
+
+p = link_to 'К списку читателей', members_path, class: 'btn btn-outline-secondary'
+
 
 / УПРАВЛЕНИЕ ЗАПИСЬЮ
 - if current_user.librarian?
-  .d-flex.gap-2.mt-4
+  .d-flex.flex-wrap.align-items-center.gap-2.mt-4
     = link_to 'Редактировать', edit_member_path(@member), class: 'btn btn-outline-primary'
     = button_to 'Удалить',
                 member_path(@member),
@@ -12,7 +19,7 @@ pre = @member.attributes.inspect
                 class: 'btn btn-outline-danger',
                 form: { data: { turbo_confirm: 'Удалить запись?' } }
 
-.d-flex.gap-2.mt-3
+.d-flex.flex-wrap.gap-2.mt-3
   = link_to 'Загрузить скан',
             attachment_path(kind: 'scan', id: @member.id),
             class: 'btn btn-outline-secondary'

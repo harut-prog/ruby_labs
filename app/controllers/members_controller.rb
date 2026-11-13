@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :require_librarian!
+
   def index
     @members = Member.all
   end
@@ -17,7 +18,7 @@ class MembersController < ApplicationController
 
     if @member.save
       redirect_to @member, notice: "Запись создана",
-                              status: :see_other
+                           status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
@@ -32,7 +33,7 @@ class MembersController < ApplicationController
 
     if @member.update(member_params)
       redirect_to @member, notice: "Запись обновлена",
-                              status: :see_other
+                           status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +44,7 @@ class MembersController < ApplicationController
 
     if @member.destroy
       redirect_to members_path, notice: "Запись удалена",
-                                 status: :see_other
+                                status: :see_other
     else
       redirect_to @member,
                   alert: @member.errors.full_messages.to_sentence,
@@ -56,5 +57,4 @@ class MembersController < ApplicationController
   def member_params
     params.require(:member).permit(:name, :email, :phone)
   end
-
 end

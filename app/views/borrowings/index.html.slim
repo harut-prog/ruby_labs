@@ -1,6 +1,39 @@
-h1 borrowings
+h1.mb-4 Выдачи книг
 
-- @borrowings.each do |item|
-  p = link_to item.id, polymorphic_path(item)
+- if current_user.librarian?
+  section.card.mb-4 aria-labelledby='new-borrowing-title'
+    .card-body
+      h2#new-borrowing-title.h5 Оформить новую выдачу
+      p.text-muted Выберите книгу и читателя, чтобы оформить выдачу.
+      = link_to 'Выдать книгу', new_borrowing_path, class: 'btn btn-primary'
 
-= link_to 'Новая выдача', new_borrowing_path
+section aria-labelledby='existing-borrowings-title'
+  h2#existing-borrowings-title.h4.mb-3 Оформленные выдачи
+  - if @borrowings.empty?
+    p.text-muted Выдач пока нет.
+  - else
+    .table-responsive
+      table.table.table-striped.align-middle
+        thead
+          tr
+            th scope='col' Книга
+            th scope='col' Читатель
+            th scope='col' Дата выдачи
+            th scope='col' Плановый возврат
+            th scope='col' Статус
+            th scope='col' Подробности
+        tbody
+          - @borrowings.each do |borrowing|
+            tr
+              td = borrowing.book.title
+              td = borrowing.member.name
+              td = borrowing.borrowed_on&.strftime('%d.%m.%Y') || '—'
+              td = borrowing.due_on&.strftime('%d.%m.%Y') || '—'
+              td
+                - if borrowing.returned_on
+                  span.badge.text-bg-success Возвращена
+                - elsif borrowing.due_on && borrowing.due_on < Date.current
+                  span.badge.text-bg-danger Просрочена
+                - else
+                  span.badge.text-bg-primary На руках
+              td = link_to 'Открыть', borrowing_path(borrowing), class: 'btn btn-sm btn-outline-primary'

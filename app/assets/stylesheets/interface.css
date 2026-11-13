@@ -90,3 +90,26 @@ main .card {
   object-position: top left;
   border-radius: 0.5rem;
 }
+
+main form.button_to {
+  display: inline-block;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+main form.button_to button.btn-outline-danger {
+  padding: 0.375rem 0.75rem;
+  border-color: #dc3545;
+  background: transparent;
+  color: #dc3545;
+}
+
+main form.button_to button.btn-outline-danger:hover {
+  background: #dc3545;
+  color: #fff;
+}

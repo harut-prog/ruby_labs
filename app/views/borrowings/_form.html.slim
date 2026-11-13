@@ -7,9 +7,10 @@
              options_for_select(@books.map { |book| [book.title, book.id, { 'data-isbn' => book.isbn }] }, borrowing.book_id),
              {},
              id: 'book_choice'
-  input#book_isbn readonly=true
+  label.form-label for='book_isbn' ISBN выбранной книги
+  input#book_isbn.form-control readonly=true
 
-  = f.label :member_id, 'Читатель'
+  label.form-label for='member_name' Существующий читатель
   - member = borrowing.member
   - member_label = member ? "#{member.name} (#{member.email})" : ''
   input#member_name list='member_names' autocomplete='off' value=member_label
@@ -18,8 +19,29 @@
       option value="#{member.name} (#{member.email})" data-id=member.id
   = f.hidden_field :member_id, id: 'member_id'
 
-  = f.date_field :borrowed_on
-  = f.date_field :due_on
-  = f.date_field :returned_on
+  h2.h5.mt-4 Даты выдачи и возврата
+  .mb-3
+    = f.label :borrowed_on, 'Дата выдачи', class: 'form-label'
+    = f.date_field :borrowed_on, class: 'form-control'
+  .mb-3
+    = f.label :due_on, 'Плановая дата возврата', class: 'form-label'
+    = f.date_field :due_on, class: 'form-control', aria: { describedby: 'due-date-hint' }
+    p#due-date-hint.form-text При создании можно оставить пустой — срок составит 14 дней с даты выдачи.
+  .mb-3
+    = f.label :returned_on, 'Фактическая дата возврата', class: 'form-label'
+    = f.date_field :returned_on, class: 'form-control', aria: { describedby: 'return-date-hint' }
+    p#return-date-hint.form-text Оставьте пустой, пока читатель не вернул книгу.
 
+  / NESTED MEMBER
+  h2.h5.mt-3 Новый читатель
+  p.text-muted Заполняйте только для нового читателя. Для существующего используйте выбор выше.
+  - unless borrowing.member&.persisted?
+    - borrowing.build_member unless borrowing.member
+    = f.fields_for :member do |m|
+      = m.label :name, 'Имя'
+      = m.text_field :name, class: 'form-control mb-2'
+      = m.label :email, 'Email'
+      = m.email_field :email, class: 'form-control mb-2'
+      = m.label :phone, 'Телефон'
+      = m.telephone_field :phone, class: 'form-control mb-2'
   = f.submit 'Сохранить'

@@ -12,6 +12,7 @@ class BorrowingsController < ApplicationController
 
   def new
     @borrowing = Borrowing.new(borrowed_on: Date.current)
+    @borrowing.build_member
   end
 
   def edit
@@ -20,6 +21,7 @@ class BorrowingsController < ApplicationController
 
   def create
     @borrowing = Borrowing.new(borrowing_params)
+    @borrowing.build_member unless @borrowing.member
     persist(:new)
   end
 
@@ -36,9 +38,9 @@ class BorrowingsController < ApplicationController
       @borrowing.book&.lock!
 
       active = @borrowing.book&.borrowings
-                         &.where(returned_on: nil)
-                         &.where&.not(id: @borrowing.id)
-                         &.exists?
+                          &.where(returned_on: nil)
+                          &.where&.not(id: @borrowing.id)
+                          &.exists?
 
       if @borrowing.returned_on.nil? && active
         @borrowing.errors.add(:base, 'Книга уже выдана')
@@ -58,11 +60,8 @@ class BorrowingsController < ApplicationController
 
   def borrowing_params
     params.require(:borrowing).permit(
-      :book_id,
-      :member_id,
-      :borrowed_on,
-      :due_on,
-      :returned_on
+      :book_id, :member_id, :borrowed_on, :due_on, :returned_on,
+      member_attributes: [:id, :name, :email, :phone]
     )
   end
 end

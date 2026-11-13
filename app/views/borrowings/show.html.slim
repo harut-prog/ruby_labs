@@ -1,3 +1,30 @@
-h1 Borrowing
+h1.mb-4 = "Выдача №#{@borrowing.id}"
 
-pre = @borrowing.attributes.inspect
+dl.row
+  dt.col-sm-3 Книга
+  dd.col-sm-9 = link_to @borrowing.book.title, book_path(@borrowing.book)
+  dt.col-sm-3 Читатель
+  dd.col-sm-9
+    - if current_user.librarian?
+      = link_to @borrowing.member.name, member_path(@borrowing.member)
+    - else
+      = @borrowing.member.name
+  dt.col-sm-3 Дата выдачи
+  dd.col-sm-9 = @borrowing.borrowed_on&.strftime('%d.%m.%Y') || 'Не указана'
+  dt.col-sm-3 Вернуть до
+  dd.col-sm-9 = @borrowing.due_on&.strftime('%d.%m.%Y') || 'Не указано'
+  dt.col-sm-3 Фактический возврат
+  dd.col-sm-9 = @borrowing.returned_on&.strftime('%d.%m.%Y') || 'Книга ещё не возвращена'
+  dt.col-sm-3 Статус
+  dd.col-sm-9
+    - if @borrowing.returned_on
+      span.badge.text-bg-success Возвращена
+    - elsif @borrowing.due_on && @borrowing.due_on < Date.current
+      span.badge.text-bg-danger Просрочена
+    - else
+      span.badge.text-bg-primary На руках
+
+.d-flex.flex-wrap.gap-2.mt-4
+  = link_to 'К списку выдач', borrowings_path, class: 'btn btn-outline-secondary'
+  - if current_user.librarian?
+    = link_to 'Редактировать', edit_borrowing_path(@borrowing), class: 'btn btn-outline-primary'

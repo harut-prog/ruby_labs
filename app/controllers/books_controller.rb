@@ -34,7 +34,7 @@ class BooksController < ApplicationController
 
     if @book.save
       redirect_to @book, notice: "Запись создана",
-                              status: :see_other
+                         status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class BooksController < ApplicationController
 
     if @book.update(book_params)
       redirect_to @book, notice: "Запись обновлена",
-                              status: :see_other
+                         status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -60,7 +60,7 @@ class BooksController < ApplicationController
 
     if @book.destroy
       redirect_to books_path, notice: "Запись удалена",
-                                 status: :see_other
+                              status: :see_other
     else
       redirect_to @book,
                   alert: @book.errors.full_messages.to_sentence,
@@ -73,5 +73,4 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :isbn, :published_year, :author_id)
   end
-
 end

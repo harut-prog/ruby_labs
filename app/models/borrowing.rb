@@ -2,6 +2,8 @@ class Borrowing < ApplicationRecord
   belongs_to :book
   belongs_to :member
 
+  accepts_nested_attributes_for :member, reject_if: :all_blank
+
   validates :borrowed_on, :due_on, presence: true
   validate :dates_order
 
