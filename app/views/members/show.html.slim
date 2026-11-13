@@ -6,4 +6,17 @@ pre = @member.attributes.inspect
 - if current_user.librarian?
   .d-flex.gap-2.mt-4
     = link_to 'Редактировать', edit_member_path(@member), class: 'btn btn-outline-primary'
-    = button_to 'Удалить', member_path(@member), method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Удалить запись?' } }
+    = button_to 'Удалить',
+                member_path(@member),
+                method: :delete,
+                class: 'btn btn-outline-danger',
+                form: { data: { turbo_confirm: 'Удалить запись?' } }
+
+.d-flex.gap-2.mt-3
+  = link_to 'Загрузить скан',
+            attachment_path(kind: 'scan', id: @member.id),
+            class: 'btn btn-outline-secondary'
+  - if @member.id_scan.attached?
+    = link_to 'Скачать скан',
+              id_scan_path(@member),
+              class: 'btn btn-outline-secondary'

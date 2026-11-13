@@ -1,9 +1,26 @@
-h1 Book
+h1.mb-4 = @book.title
 
-pre = @book.attributes.inspect
+.row.g-4.mb-4
+  - if @book.cover.attached?
+    .col-md-4.col-lg-3
+      = image_tag cover_path(@book), class: 'book-cover', alt: "Обложка книги #{@book.title}"
+  .col
+    dl.row
+      dt.col-sm-3 Автор
+      dd.col-sm-9 = link_to @book.author.name, author_path(@book.author)
+      dt.col-sm-3 ISBN
+      dd.col-sm-9 = @book.isbn
+      dt.col-sm-3 Год издания
+      dd.col-sm-9 = @book.published_year
+      dt.col-sm-3 Доступность
+      dd.col-sm-9 = book_status(@book)
+
+p = link_to 'Назад в каталог', books_path, class: 'btn btn-outline-secondary'
+
 
 / УПРАВЛЕНИЕ ЗАПИСЬЮ
 - if current_user.librarian?
   .d-flex.gap-2.mt-4
     = link_to 'Редактировать', edit_book_path(@book), class: 'btn btn-outline-primary'
     = button_to 'Удалить', book_path(@book), method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Удалить запись?' } }
+= link_to 'Загрузить обложку', attachment_path(kind: 'cover', id: @book.id) if current_user.librarian?

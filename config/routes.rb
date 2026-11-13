@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'covers/:id', to: 'files#cover', as: :cover
+  get 'id_scans/:id', to: 'files#scan', as: :id_scan
+  get 'attachments/:kind/:id', to: 'files#edit', as: :attachment
+  patch 'attachments/:kind/:id', to: 'files#update'
+
   devise_for :users
   root 'pages#home'
 

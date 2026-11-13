@@ -1,0 +1,9 @@
+<h1 class="mb-4">Загрузка файла</h1>
+<p class="text-muted">Максимальный размер — 5 МБ. Обложка: PNG или JPEG. Документ: PDF, PNG или JPEG.</p>
+<%= form_with url: attachment_path(kind: params[:kind], id: params[:id]), method: :patch, multipart: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :file, "Выберите файл", class: "form-label" %>
+    <%= f.file_field :file, required: true, class: "form-control", accept: params[:kind] == "cover" ? "image/png,image/jpeg" : "application/pdf,image/png,image/jpeg" %>
+  </div>
+  <%= f.submit "Загрузить", class: "btn btn-primary" %>
+<% end %>

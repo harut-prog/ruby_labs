@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module LibraryManagement
   class Application < Rails::Application
+    config.active_storage.draw_routes = false
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 

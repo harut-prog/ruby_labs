@@ -80,3 +80,13 @@ main form .field {
 main .card {
   margin-bottom: 1rem;
 }
+
+.book-cover {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  max-height: 380px;
+  object-fit: contain;
+  object-position: top left;
+  border-radius: 0.5rem;
+}
