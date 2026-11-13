@@ -1,7 +1,32 @@
-h1 members
-
-- @members.each do |item|
- p = link_to item.id, polymorphic_path(item)
+h1.mb-4 Читатели
 
 - if current_user.librarian?
-  p.mt-3 = link_to 'Добавить запись', new_member_path, class: 'btn btn-primary'
+  section.card.mb-4 aria-labelledby='new-member-title'
+    .card-body
+      h2#new-member-title.h5 Добавить читателя
+      p.text-muted Укажите имя, email и телефон нового читателя.
+      = link_to 'Новый читатель', new_member_path, class: 'btn btn-primary'
+
+section aria-labelledby='members-list-title'
+  h2#members-list-title.h4.mb-3 Список читателей
+  - if @members.empty?
+    p.text-muted Читатели пока не добавлены.
+  - else
+    .table-responsive
+      table.table.table-striped.align-middle
+        thead
+          tr
+            th scope='col' Имя
+            th scope='col' Email
+            th scope='col' Телефон
+            th scope='col' Действия
+        tbody
+          - @members.each do |member|
+            tr
+              td = member.name.presence || 'Не указано'
+              td.text-break = member.email
+              td = member.phone.presence || 'Не указан'
+              td
+                .d-flex.flex-wrap.gap-2
+                  = link_to 'Открыть', member_path(member), class: 'btn btn-sm btn-outline-primary'
+                  = link_to 'Редактировать', edit_member_path(member), class: 'btn btn-sm btn-outline-secondary'

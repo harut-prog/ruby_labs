@@ -1,5 +1,18 @@
-.card.mb-3
-  .card-body
-    h2 = link_to book.title, book_path(book), data: { turbo_frame: '_top' }
-    p = book.author.name
-    p = book_status(book)
+.col-md-6.col-xl-4
+  .card.h-100
+    .card-body.d-flex.flex-column
+      h3.card-title.h5
+        = link_to book.title, book_path(book), data: { turbo_frame: '_top' }, class: 'text-decoration-none'
+      p.card-text.text-muted = book.author.name
+      dl.row.small.mb-3
+        dt.col-4 ISBN
+        dd.col-8.text-break = book.isbn
+        dt.col-4 Год
+        dd.col-8 = book.published_year
+      p
+        - if book.available?
+          span.badge.text-bg-success = book_status(book)
+        - else
+          span.badge.text-bg-secondary = book_status(book)
+      .mt-auto
+        = link_to 'Открыть книгу', book_path(book), data: { turbo_frame: '_top' }, class: 'btn btn-sm btn-outline-primary'

@@ -2,24 +2,24 @@
   <p class="text-danger"><%= message %></p>
 <% end %>
 <%= form_with model: @author do |f| %>
-<div class="mb-3">
-  <%= f.label :name, "Автор" %>
-  <%= f.text_field :name, class: "form-control" %>
-</div>
-<div class="mb-3">
-  <%= f.label :biography, "Биография" %>
-  <%= f.text_area :biography, class: "form-control" %>
-</div>
-<%= f.fields_for :books do |b| %>
-<fieldset class="border rounded p-3 mb-3">
-  <legend class="fs-6">Книга</legend>
-  <%= b.label :title, "Название" %>
-  <%= b.text_field :title, class: "form-control mb-2" %>
-  <%= b.label :isbn, "ISBN" %>
-  <%= b.text_field :isbn, class: "form-control mb-2" %>
-  <%= b.label :published_year, "Год" %>
-  <%= b.number_field :published_year, class: "form-control" %>
-</fieldset>
-<% end %>
-<%= f.submit "Сохранить", class: "btn btn-primary" %>
+  <div class="mb-3">
+    <%= f.label :name, "Автор" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :biography, "Биография" %>
+    <%= f.text_area :biography, class: "form-control" %>
+  </div>
+  <%= f.fields_for :books do |b| %>
+    <fieldset class="border rounded p-3 mb-3">
+      <legend class="fs-6">Книга</legend>
+      <%= b.label :title, "Название" %>
+      <%= b.text_field :title, class: "form-control mb-2" %>
+      <%= b.label :isbn, "ISBN" %>
+      <%= b.text_field :isbn, class: "form-control mb-2" %>
+      <%= b.label :published_year, "Год" %>
+      <%= b.number_field :published_year, class: "form-control" %>
+    </fieldset>
+  <% end %>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
 <% end %>

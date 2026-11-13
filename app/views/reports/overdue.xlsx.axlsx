@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Выдачи") do |sheet|
+  sheet.add_row ["Читатель", "Книга", "Выдана", "Вернуть до", "Возврат", "Просрочено дней"]
+  @rows.each do |x|
+    days = x.returned_on.nil? ? [0, (Date.current - x.due_on).to_i].max : 0
+    sheet.add_row [x.member.name, x.book.title, x.borrowed_on.to_s,
+      x.due_on.to_s, x.returned_on.to_s, days],
+      types: [:string, :string, :string, :string, :string, :integer]
+  end
+end

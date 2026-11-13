@@ -1,11 +1,31 @@
 h1.mb-4 Авторы
 
-.list-group
-  - @authors.each do |author|
-    = link_to author.name, author_path(author), class: 'list-group-item list-group-item-action'
-
-- if @authors.empty?
-  p.text-muted Авторы пока не добавлены.
-
 - if current_user.librarian?
-  p.mt-3 = link_to 'Добавить запись', new_author_path, class: 'btn btn-primary'
+  section.card.mb-4 aria-labelledby='new-author-title'
+    .card-body
+      h2#new-author-title.h5 Добавить автора
+      p.text-muted Укажите данные автора. Книги можно добавить в той же форме.
+      = link_to 'Новый автор', new_author_path, class: 'btn btn-primary'
+
+section aria-labelledby='authors-list-title'
+  h2#authors-list-title.h4.mb-3 Список авторов
+  - if @authors.empty?
+    p.text-muted Авторы пока не добавлены.
+  - else
+    .table-responsive
+      table.table.table-striped.align-middle
+        thead
+          tr
+            th scope='col' Имя
+            th scope='col' Биография
+            th scope='col' Действия
+        tbody
+          - @authors.each do |author|
+            tr
+              td = author.name
+              td.text-break = truncate(author.biography.presence || 'Не указана', length: 160)
+              td
+                .d-flex.flex-wrap.gap-2
+                  = link_to 'Открыть', author_path(author), class: 'btn btn-sm btn-outline-primary'
+                  - if current_user.librarian?
+                    = link_to 'Редактировать', edit_author_path(author), class: 'btn btn-sm btn-outline-secondary'

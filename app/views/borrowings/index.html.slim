@@ -37,3 +37,19 @@ section aria-labelledby='existing-borrowings-title'
                 - else
                   span.badge.text-bg-primary На руках
               td = link_to 'Открыть', borrowing_path(borrowing), class: 'btn btn-sm btn-outline-primary'
+- if current_user.librarian?
+  section.card.mt-4 aria-labelledby='excel-reports-title'
+    .card-body
+      .d-flex.align-items-center.gap-2.mb-2
+        h2#excel-reports-title.h5.mb-0 Отчёты Excel
+        span.badge.text-bg-success XLSX
+      p.text-muted.mb-4 Скачайте отчёт для просмотра в Microsoft Excel или LibreOffice Calc.
+      .row.g-4
+        .col-md-6
+          h3.h6 Все выдачи
+          p.text-muted.small Список всех выдач: читатели, книги, даты выдачи и возврата.
+          = link_to 'Скачать все выдачи (.xlsx)', '/reports/borrowings.xlsx', class: 'btn btn-outline-success', data: { turbo: false }
+        .col-md-6
+          h3.h6 Должники
+          p.text-muted.small Невозвращённые книги с истёкшим сроком и числом дней просрочки.
+          = link_to 'Скачать должников (.xlsx)', '/reports/overdue.xlsx', class: 'btn btn-outline-success', data: { turbo: false }
