@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="ru"><head><title>Библиотека</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<%= csrf_meta_tags %><%= csp_meta_tag %>
-<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-<%= javascript_importmap_tags %>
-</head><body>
-<%= render "shared/nav" %>
-<% flash.each do |key, value| %><p><%= value %></p><% end %>
-<main class="container py-4"><%= yield %></main>
-<footer>Библиотека · <%= Date.current.year %></footer>
-</body></html>
+<html lang="ru">
+  <head>
+    <title>Библиотека</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <%= render "shared/nav" %>
+    <% flash.each do |key, value| %>
+      <p><%= value %></p>
+    <% end %>
+    <main class="container py-4">
+      <%= yield %>
+    </main>
+    <footer>Библиотека · <%= Date.current.year %></footer>
+  </body>
+</html>
