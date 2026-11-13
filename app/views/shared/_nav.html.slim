@@ -1,10 +1,14 @@
-nav.navbar
-  = link_to 'Главная', root_path
-  = link_to 'Книги', books_path
-  = link_to 'Авторы', authors_path
-  = link_to 'Читатели', members_path
-  = link_to 'Выдачи', borrowings_path
+nav.navbar.navbar-expand.bg-body-tertiary.border-bottom
+  .container.flex-wrap.gap-3
+    = link_to 'Библиотека', root_path, class: 'navbar-brand'
 
-= form_with url: books_path, method: :get do |f|
-  = f.search_field :query, placeholder: 'Название или ISBN'
-  = f.submit 'Найти'
+    .navbar-nav.flex-row.flex-wrap.gap-3
+      = link_to 'Главная', root_path, class: 'nav-link'
+      = link_to 'Книги', books_path, class: 'nav-link'
+      = link_to 'Авторы', authors_path, class: 'nav-link'
+      = link_to 'Читатели', members_path, class: 'nav-link'
+      = link_to 'Выдачи', borrowings_path, class: 'nav-link'
+
+    = form_with url: books_path, method: :get, class: 'd-flex gap-2', role: 'search' do |f|
+      = f.search_field :query, value: params[:query], placeholder: 'Название или ISBN', class: 'form-control', aria: { label: 'Поиск книг' }
+      = f.submit 'Найти', class: 'btn btn-primary'

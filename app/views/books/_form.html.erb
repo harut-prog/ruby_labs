@@ -1,0 +1,23 @@
+<% @book.errors.full_messages.each do |message| %>
+  <p class="text-danger"><%= message %></p>
+<% end %>
+<%= form_with model: @book do |f| %>
+  <div class="mb-3">
+    <%= f.label :title, "Название" %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :isbn, "ISBN" %>
+    <%= f.text_field :isbn, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :published_year, "Год издания" %>
+    <%= f.number_field :published_year, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :author_id, "Автор" %>
+    <%= f.collection_select :author_id, Author.order(:name), :id, :name, { prompt: 'Выберите автора' }, { class: 'form-select' } %>
+  </div>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+  <%= link_to "Назад", books_path, class: "btn btn-link" %>
+<% end %>

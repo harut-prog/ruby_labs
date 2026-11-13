@@ -1,4 +1,11 @@
-h1 authors
+h1.mb-4 Авторы
 
-- @authors.each do |item|
- p = link_to item.id, polymorphic_path(item)
+.list-group
+  - @authors.each do |author|
+    = link_to author.name, author_path(author), class: 'list-group-item list-group-item-action'
+
+- if @authors.empty?
+  p.text-muted Авторы пока не добавлены.
+
+- if current_user.librarian?
+  p.mt-3 = link_to 'Добавить запись', new_author_path, class: 'btn btn-primary'

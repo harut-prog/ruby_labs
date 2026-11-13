@@ -1,0 +1,82 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  color: #212529;
+}
+
+main {
+  flex: 1;
+}
+
+body > footer {
+  padding: 1.25rem;
+  border-top: 1px solid #dee2e6;
+  background: #fff;
+  color: #6c757d;
+  text-align: center;
+}
+
+main form {
+  max-width: 42rem;
+  padding: 1.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+main form label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-weight: 500;
+}
+
+main form input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+main form select,
+main form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #adb5bd;
+  border-radius: 0.375rem;
+  background: #fff;
+  color: #212529;
+  font: inherit;
+}
+
+main form input:focus-visible,
+main form select:focus-visible,
+main form textarea:focus-visible {
+  outline: 3px solid #9ec5fe;
+  outline-offset: 2px;
+}
+
+main form input[readonly] {
+  background: #e9ecef !important;
+}
+
+main form input[type="submit"],
+main form button[type="submit"] {
+  padding: 0.625rem 1rem;
+  border: 1px solid #0d6efd;
+  border-radius: 0.375rem;
+  background: #0d6efd;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+main form input[type="submit"]:hover,
+main form button[type="submit"]:hover {
+  background: #0b5ed7;
+}
+
+main form .field {
+  margin-bottom: 1rem;
+}
+
+main .card {
+  margin-bottom: 1rem;
+}

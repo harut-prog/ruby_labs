@@ -1,1 +1,7 @@
 = render 'authors/author_bio', author: @author
+
+/ УПРАВЛЕНИЕ ЗАПИСЬЮ
+- if current_user.librarian?
+  .d-flex.gap-2.mt-4
+    = link_to 'Редактировать', edit_author_path(@author), class: 'btn btn-outline-primary'
+    = button_to 'Удалить', author_path(@author), method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Удалить запись?' } }

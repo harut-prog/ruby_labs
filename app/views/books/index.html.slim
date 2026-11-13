@@ -1,3 +1,24 @@
-h1 Каталог книг
+h1.mb-4 Каталог книг
+
+= form_with url: books_path, method: :get, class: 'mb-4' do |f|
+  .mb-3
+    = f.label :query, 'Название, ISBN или автор'
+    = f.search_field :query, value: params[:query], class: 'form-control'
+
+  .mb-3
+    = f.label :author_id, 'Автор'
+    = f.collection_select :author_id, Author.order(:name), :id, :name, { include_blank: 'Все авторы', selected: params[:author_id] }, class: 'form-select'
+
+  .mb-3
+    = f.label :available, 'Доступность'
+    = f.select :available, [['Все книги', ''], ['Доступны', 'true'], ['Выданы', 'false']], { selected: params[:available] }, class: 'form-select'
+
+  = f.submit 'Применить', class: 'btn btn-primary'
+
+- if current_user.librarian?
+  p = link_to 'Добавить книгу', new_book_path, class: 'btn btn-primary'
+
+- if @books.empty?
+  p.text-muted Ничего не найдено.
 
 = render partial: 'books/book_card', collection: @books, as: :book

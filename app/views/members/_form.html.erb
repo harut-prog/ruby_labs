@@ -1,0 +1,19 @@
+<% @member.errors.full_messages.each do |message| %>
+  <p class="text-danger"><%= message %></p>
+<% end %>
+<%= form_with model: @member do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Имя" %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :phone, "Телефон" %>
+    <%= f.telephone_field :phone, class: 'form-control' %>
+  </div>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+  <%= link_to "Назад", members_path, class: "btn btn-link" %>
+<% end %>

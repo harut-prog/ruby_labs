@@ -1,0 +1,15 @@
+<% @author.errors.full_messages.each do |message| %>
+  <p class="text-danger"><%= message %></p>
+<% end %>
+<%= form_with model: @author do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Имя" %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :biography, "Биография" %>
+    <%= f.text_area :biography, class: 'form-control' %>
+  </div>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+  <%= link_to "Назад", authors_path, class: "btn btn-link" %>
+<% end %>

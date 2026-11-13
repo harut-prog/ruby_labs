@@ -1,12 +1,13 @@
 class BorrowingsController < ApplicationController
+  before_action :require_librarian!, except: [:index, :show]
   before_action :load_choices, only: %i[new create edit update]
 
   def index
-    @borrowings = Borrowing.includes(:book, :member)
+    @borrowings = allowed_borrowings.includes(:book, :member)
   end
 
   def show
-    @borrowing = Borrowing.find(params[:id])
+    @borrowing = allowed_borrowings.find(params[:id])
   end
 
   def new
@@ -14,7 +15,7 @@ class BorrowingsController < ApplicationController
   end
 
   def edit
-    @borrowing = Borrowing.find(params[:id])
+    @borrowing = allowed_borrowings.find(params[:id])
   end
 
   def create
@@ -23,7 +24,7 @@ class BorrowingsController < ApplicationController
   end
 
   def update
-    @borrowing = Borrowing.find(params[:id])
+    @borrowing = allowed_borrowings.find(params[:id])
     @borrowing.assign_attributes(borrowing_params)
     persist(:edit)
   end

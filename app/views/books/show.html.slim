@@ -1,3 +1,9 @@
 h1 Book
 
 pre = @book.attributes.inspect
+
+/ УПРАВЛЕНИЕ ЗАПИСЬЮ
+- if current_user.librarian?
+  .d-flex.gap-2.mt-4
+    = link_to 'Редактировать', edit_book_path(@book), class: 'btn btn-outline-primary'
+    = button_to 'Удалить', book_path(@book), method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Удалить запись?' } }

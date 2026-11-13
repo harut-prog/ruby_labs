@@ -1,3 +1,9 @@
 h1 Member
 
 pre = @member.attributes.inspect
+
+/ УПРАВЛЕНИЕ ЗАПИСЬЮ
+- if current_user.librarian?
+  .d-flex.gap-2.mt-4
+    = link_to 'Редактировать', edit_member_path(@member), class: 'btn btn-outline-primary'
+    = button_to 'Удалить', member_path(@member), method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Удалить запись?' } }

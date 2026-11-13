@@ -2,3 +2,6 @@ h1 members
 
 - @members.each do |item|
  p = link_to item.id, polymorphic_path(item)
+
+- if current_user.librarian?
+  p.mt-3 = link_to 'Добавить запись', new_member_path, class: 'btn btn-primary'
