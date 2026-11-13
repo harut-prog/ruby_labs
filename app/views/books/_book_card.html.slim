@@ -1,0 +1,5 @@
+.card.mb-3
+  .card-body
+    h2 = link_to book.title, book_path(book)
+    p = book.author.name
+    p = book.available ? 'Доступна' : 'Выдана'
