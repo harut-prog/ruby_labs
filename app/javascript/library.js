@@ -20,3 +20,9 @@ function updateLibraryFields(event) {
 document.addEventListener('turbo:load', updateLibraryFields);
 document.addEventListener('change', updateLibraryFields);
 document.addEventListener('input', updateLibraryFields);
+let searchTimer;
+document.addEventListener('input', (event) => {
+  if (!event.target.matches('[data-instant-search]')) return;
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => event.target.form.requestSubmit(), 300);
+});

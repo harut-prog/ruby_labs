@@ -1,9 +1,9 @@
 h1.mb-4 Каталог книг
 
-= form_with url: books_path, method: :get, class: 'mb-4' do |f|
+= form_with url: books_path, method: :get, data: { turbo_frame: 'books' }, class: 'mb-4' do |f|
   .mb-3
     = f.label :query, 'Название, ISBN или автор'
-    = f.search_field :query, value: params[:query], class: 'form-control'
+    = f.search_field :query, value: params[:query], class: 'form-control', data: { instant_search: true }
 
   .mb-3
     = f.label :author_id, 'Автор'
@@ -21,4 +21,5 @@ h1.mb-4 Каталог книг
 - if @books.empty?
   p.text-muted Ничего не найдено.
 
-= render partial: 'books/book_card', collection: @books, as: :book
+= turbo_frame_tag 'books' do
+  = render partial: 'books/book_card', collection: @books, as: :book
