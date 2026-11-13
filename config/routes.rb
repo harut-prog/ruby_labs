@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
- get 'reports/borrowings', to: 'reports#borrowings', defaults: {format: :xlsx}
- get 'reports/overdue', to: 'reports#overdue', defaults: {format: :xlsx}
+  get 'word/members/:id', to: 'word_documents#library_card', as: :member_word
+  get 'word/books/:id', to: 'word_documents#book_card', as: :book_word
+
+  get 'reports/borrowings', to: 'reports#borrowings', defaults: { format: :xlsx }
+  get 'reports/overdue', to: 'reports#overdue', defaults: { format: :xlsx }
 
   get 'covers/:id', to: 'files#cover', as: :cover
   get 'id_scans/:id', to: 'files#scan', as: :id_scan

@@ -17,10 +17,20 @@ h1.mb-4 = @book.title
 
 p = link_to 'Назад в каталог', books_path, class: 'btn btn-outline-secondary'
 
-
 / УПРАВЛЕНИЕ ЗАПИСЬЮ
 - if current_user.librarian?
-  .d-flex.gap-2.mt-4
+  .d-flex.flex-wrap.align-items-center.gap-2.mt-4
     = link_to 'Редактировать', edit_book_path(@book), class: 'btn btn-outline-primary'
+    = link_to 'Загрузить обложку', attachment_path(kind: 'cover', id: @book.id), class: 'btn btn-outline-secondary'
     = button_to 'Удалить', book_path(@book), method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Удалить запись?' } }
-= link_to 'Загрузить обложку', attachment_path(kind: 'cover', id: @book.id) if current_user.librarian?
+
+- if current_user.librarian?
+  section.card.mt-4 aria-labelledby='word-document-title'
+    .card-body
+      .d-flex.align-items-center.gap-2.mb-2
+        h2#word-document-title.h5.mb-0 Документ Word
+        span.badge.text-bg-primary DOCX
+      h3.h6.mt-3 Карточка книги
+      p.text-muted Название, автор, ISBN, год издания и текущая доступность книги.
+      p.text-muted.small Файл можно открыть в Microsoft Word или LibreOffice Writer.
+      = link_to 'Скачать документ (.docx)', book_word_path(@book), class: 'btn btn-outline-primary', data: { turbo: false }

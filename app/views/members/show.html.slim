@@ -8,7 +8,6 @@ dl.row
 
 p = link_to 'К списку читателей', members_path, class: 'btn btn-outline-secondary'
 
-
 / УПРАВЛЕНИЕ ЗАПИСЬЮ
 - if current_user.librarian?
   .d-flex.flex-wrap.align-items-center.gap-2.mt-4
@@ -27,3 +26,14 @@ p = link_to 'К списку читателей', members_path, class: 'btn btn-
     = link_to 'Скачать скан',
               id_scan_path(@member),
               class: 'btn btn-outline-secondary'
+
+- if current_user.librarian?
+  section.card.mt-4 aria-labelledby='word-document-title'
+    .card-body
+      .d-flex.align-items-center.gap-2.mb-2
+        h2#word-document-title.h5.mb-0 Документ Word
+        span.badge.text-bg-primary DOCX
+      h3.h6.mt-3 Читательский билет
+      p.text-muted Данные читателя и список невозвращённых книг с датами выдачи и планового возврата.
+      p.text-muted.small Файл можно открыть в Microsoft Word или LibreOffice Writer.
+      = link_to 'Скачать документ (.docx)', member_word_path(@member), class: 'btn btn-outline-primary', data: { turbo: false }

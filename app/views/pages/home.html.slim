@@ -1,4 +1,73 @@
-h1 Библиотечная система
-p = Time.current.strftime('%d.%m.%Y %H:%M:%S')
-p Количество книг: 0
-p = ['Книга открывает мир', 'Читайте каждый день'].sample
+section.home-hero.mb-4 aria-labelledby='home-title'
+  .row.align-items-center.g-4
+    .col-lg-8
+      p.home-eyebrow Электронная библиотека
+      h1#home-title.display-5.fw-semibold.mb-3 Книги рядом. Всё под рукой.
+      p.home-lead.mb-4 Найдите нужную книгу, познакомьтесь с авторами и следите за сроками возврата в одном месте.
+      .d-flex.flex-wrap.gap-3
+        = link_to 'Открыть каталог', books_path, class: 'btn btn-light btn-lg'
+        = link_to current_user.librarian? ? 'Управлять выдачами' : 'Мои выдачи', borrowings_path, class: 'btn btn-outline-light btn-lg'
+    .col-lg-4
+      .home-session
+        p.home-eyebrow.mb-2 Ваш рабочий кабинет
+        p.h4.mb-3 = current_user.librarian? ? 'Библиотекарь' : 'Читатель'
+        p.mb-3.text-break = current_user.email
+        p.small.mb-0 = Time.current.strftime('%d.%m.%Y · %H:%M')
+
+section.mb-4 aria-labelledby='home-overview'
+  h2#home-overview.h4.mb-3 Библиотека сегодня
+  .row.g-3
+    .col-6.col-lg-3
+      .card.h-100.home-stat
+        .card-body
+          p.text-muted.small.mb-2 Книг в каталоге
+          p.display-6.fw-semibold.mb-0 = @books_count
+    .col-6.col-lg-3
+      .card.h-100.home-stat
+        .card-body
+          p.text-muted.small.mb-2 Доступно для выдачи
+          p.display-6.fw-semibold.mb-0.text-success = @available_count
+    .col-6.col-lg-3
+      .card.h-100.home-stat
+        .card-body
+          p.text-muted.small.mb-2 = current_user.librarian? ? 'Книг на руках' : 'У меня на руках'
+          p.display-6.fw-semibold.mb-0 = @active_count
+    .col-6.col-lg-3
+      .card.h-100.home-stat
+        .card-body
+          p.text-muted.small.mb-2 = current_user.librarian? ? 'Просроченных выдач' : 'Мои просрочки'
+          p.display-6.fw-semibold.mb-0 class=(@overdue_count.positive? ? 'text-danger' : 'text-secondary') = @overdue_count
+
+section aria-labelledby='home-sections'
+  h2#home-sections.h4.mb-3 С чего начнём?
+  .row.g-3
+    .col-md-4
+      .card.h-100
+        .card-body.d-flex.flex-column
+          h3.h5 Каталог книг
+          p.text-muted Найдите книгу по названию, ISBN или автору. Проверьте её доступность.
+          .mt-auto
+            = link_to 'Найти книгу →', books_path, class: 'link-primary fw-semibold'
+    .col-md-4
+      .card.h-100
+        .card-body.d-flex.flex-column
+          h3.h5 Авторы
+          p.text-muted Познакомьтесь с авторами и прочитайте их биографии.
+          .mt-auto
+            = link_to 'Открыть авторов →', authors_path, class: 'link-primary fw-semibold'
+    .col-md-4
+      .card.h-100
+        .card-body.d-flex.flex-column
+          - if current_user.librarian?
+            h3.h5 Читатели
+            p.text-muted Откройте карточку читателя, обновите контакты или скачайте читательский билет.
+            .mt-auto
+              = link_to 'Список читателей →', members_path, class: 'link-primary fw-semibold'
+          - else
+            h3.h5 Мои выдачи
+            p.text-muted Посмотрите свои книги и плановые даты возврата.
+            .mt-auto
+              = link_to 'Проверить сроки →', borrowings_path, class: 'link-primary fw-semibold'
+
+aside.home-note.mt-4
+  p.mb-0 Книга открывает мир. Выберите следующую историю в нашем каталоге.

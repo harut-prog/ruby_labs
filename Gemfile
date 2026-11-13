@@ -72,3 +72,5 @@ gem "slim-rails", "~> 4.0"
 gem "devise", "~> 5.0"
 
 gem "caxlsx_rails", "~> 0.7.2"
+
+gem "caracal-rails", "~> 1.0"
